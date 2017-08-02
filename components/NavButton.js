@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { Platform, TouchableOpacity, View, ViewPropTypes } from 'react-native'
 import styles from '../styles'
 
-function NavButton({ style, onPress, children, disabled, disabledStyle, accessibilityLabel }) {
+function NavButton({ style, onPress, children, disabled, disabledStyle, accessibilityLabel, platform = Platform.OS }) {
   let navButtonStyles = []
-  if (Platform.OS === 'ios') {
+  if (platform === 'ios') {
     navButtonStyles = [styles.navBarButtonIOS]
-  } else if (Platform.OS === 'android') {
+  } else if (platform === 'android') {
     navButtonStyles = [styles.navBarButtonAndroid]
   }
   if (disabled) {
@@ -43,6 +44,7 @@ NavButton.propTypes = {
   style: ViewPropTypes.style,
   disabled: PropTypes.bool,
   disabledStyle: ViewPropTypes.style,
+  platform: PropTypes.string
 }
 
 NavButton.defaultProps = {

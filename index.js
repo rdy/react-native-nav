@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-
+import React from 'react'
+import PropTypes from 'prop-types';
 import { View, Platform,} from 'react-native';
 import { StatusBarEnhanced } from './components/StatusBarEnhanced'
 export { NavGroup } from './components/NavGroup'
@@ -8,15 +8,15 @@ export { NavButtonText } from './components/NavButtonText'
 export { NavTitle } from './components/NavTitle'
 import styles from './styles'
 
-function NavigationBar({ style, children, statusBar }) {
+function NavigationBar({ style, children, noStatusBar, statusBar, platform = Platform.OS}) {
   let navBar = null
-  if (Platform.OS === 'ios') {
+  if (platform === 'ios') {
     navBar = (
       <View style={[styles.navBar, styles.navBarIOS, style.navBar]}>
         {children}
       </View>
     )
-  } else if (Platform.OS === 'android') {
+  } else if (platform === 'android') {
     navBar = (
       <View style={[styles.navBar, styles.navBarAndroid, style.navBar]}>
         {children}
@@ -26,23 +26,25 @@ function NavigationBar({ style, children, statusBar }) {
 
   return (
     <View style={[styles.navBarContainer, style.navBarContainer]}>
-      <StatusBarEnhanced style={style.statusBar}
-        statusBar={statusBar}
-      />
+      {!noStatusBar && <StatusBarEnhanced style={style.statusBar}
+        statusBar={statusBar} platform={platform}
+      />}
       {navBar}
     </View>
   )
 }
 
 NavigationBar.propTypes = {
+  noStatusBar: PropTypes.bool,
   statusBar: PropTypes.object,
   style: PropTypes.object,
   children: PropTypes.node,
+  platform: PropTypes.string
 }
 
 NavigationBar.defaultProps = {
   style: {},
-  statusBar: {},
+  statusBar: {}
 }
 
 export default NavigationBar

@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import styles from '../styles';
 
-function NavButtonText({ style, children }) {
+function NavButtonText({ style, children, ...props }) {
   return (
-    <Text style={[styles.navBarButtonText, style]} {...this.props}>
+    <Text style={[styles.navBarButtonText, style]} {...props}>
       {children}
     </Text>
   )

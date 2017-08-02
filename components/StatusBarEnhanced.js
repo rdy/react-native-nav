@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types';
 import { Platform, View, StatusBar, ViewPropTypes } from 'react-native'
 import styles from '../styles'
 
-function StatusBarEnhanced({ statusBar, style }) {
+function StatusBarEnhanced({ statusBar, style, platform = Platform.OS }) {
   let statusBarConfig = {}
-  if (Platform.OS === 'ios') {
+  if (platform === 'ios') {
     statusBarConfig = {
       animated: true,
       hidden: false,
@@ -12,7 +13,7 @@ function StatusBarEnhanced({ statusBar, style }) {
       networkActivityIndicatorVisible: false,
       showHideTransition: 'fade',
     }
-  } else if (Platform.OS === 'android') {
+  } else if (platform === 'android') {
     statusBarConfig = {
       animated: true,
       hidden: false,
@@ -24,12 +25,12 @@ function StatusBarEnhanced({ statusBar, style }) {
   const config = Object.assign({}, statusBarConfig, statusBar)
 
   let statusBarStyles = []
-  if (Platform.OS === 'ios') {
+  if (platform === 'ios') {
     statusBarStyles = [
       styles.statusBarIOS,
       style,
     ]
-  } else if (Platform.OS === 'android') {
+  } else if (platform === 'android') {
     statusBarStyles = [
       styles.statusBarAndroid,
       style,
@@ -46,6 +47,7 @@ function StatusBarEnhanced({ statusBar, style }) {
 StatusBarEnhanced.propTypes = {
   statusBar: PropTypes.object,
   style: ViewPropTypes.style,
+  platform: PropTypes.string
 }
 
 StatusBarEnhanced.defaultProps = {
